@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Require tags for all resources.
+
+Resources:
+  RequiredTags:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: RequiredTags
+      Description: Config rule to enforce tagging
+      InputParameters:
+        tag1Key: acb:cost-allocation:env
+        tag2Key: acb:cost-allocation:owner
+        tag3Key: acb:cost-allocation:provider
+        tag4Key: acb:cost-allocation:service
+      Source:
+        Owner: AWS
+        SourceIdentifier: REQUIRED_TAGS
