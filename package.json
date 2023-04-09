@@ -1,0 +1,26 @@
+{
+    "name": "aws-organization-for-devs",
+    "version": "0.1.0",
+    "scripts": {
+        "build": "vite build",
+        "clean": "rimraf cdk.out coverage dist",
+        "deploy": "npm run clean && cdk deploy --require-approval never",
+        "destroy": "cdk destroy",
+        "diff": "cdk diff",
+        "synth": "cdk synth",
+        "test": "vitest run --coverage --silent"
+    },
+    "dependencies": {
+        "aws-cdk-lib": "^2.14.0",
+        "constructs": "^10.0.73"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.9",
+        "@vitest/coverage-c8": "^0.30.0",
+        "aws-cdk": "^2.14.0",
+        "rimraf": "^4.1.1",
+        "ts-node": "^10.5.0",
+        "typescript": "^5.0.2",
+        "vitest": "^0.30.0"
+    }
+}

@@ -1,0 +1,240 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Entire Stack > match a snapshot 1`] = `
+{
+  "Outputs": {
+    "certArn": {
+      "Description": "certificate arn",
+      "Value": {
+        "Ref": "DelegatedZoneCert71201BFD",
+      },
+    },
+    "nameservers": {
+      "Description": "nameservers",
+      "Value": {
+        "Fn::Join": [
+          ", ",
+          {
+            "Fn::GetAtt": [
+              "delegatedZone93B2A299",
+              "NameServers",
+            ],
+          },
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "AccountCerteArn7BFDEF53": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "Name": "/account/certificateArn",
+        "ReplicaRegions": [
+          {
+            "Region": "eu-west-1",
+          },
+        ],
+        "SecretString": {
+          "Ref": "DelegatedZoneCert71201BFD",
+        },
+      },
+      "Type": "AWS::SecretsManager::Secret",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "CustomCrossAccountZoneDelegationCustomResourceProviderHandler44A84265": {
+      "DependsOn": [
+        "CustomCrossAccountZoneDelegationCustomResourceProviderRoleED64687B",
+      ],
+      "Properties": {
+        "Code": {"S3Bucket":{"Fn::Sub":"cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}"},"S3Key":"[HASH REMOVED].zip"},
+        "Handler": "__entrypoint__.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "CustomCrossAccountZoneDelegationCustomResourceProviderRoleED64687B",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CustomCrossAccountZoneDelegationCustomResourceProviderRoleED64687B": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Sub": "arn:\${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "DelegatedZoneCert71201BFD": {
+      "Properties": {
+        "DomainName": "*.sandbox.awscommunitybuilders.org",
+        "DomainValidationOptions": [
+          {
+            "DomainName": "*.sandbox.awscommunitybuilders.org",
+            "HostedZoneId": {
+              "Ref": "delegatedZone93B2A299",
+            },
+          },
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "test-stack/DelegatedZoneCert",
+          },
+        ],
+        "ValidationMethod": "DNS",
+      },
+      "Type": "AWS::CertificateManager::Certificate",
+    },
+    "DelegationRecordCrossAccountZoneDelegationCustomResource3FB1AD46": {
+      "DeletionPolicy": "Delete",
+      "DependsOn": [
+        "DelegationRecordcrossaccountzonedelegationhandlerrolePolicy7B31DBF8",
+      ],
+      "Properties": {
+        "AssumeRoleArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":iam::353228500194:role/HostedZoneDelegationRole",
+            ],
+          ],
+        },
+        "DelegatedZoneName": "sandbox.awscommunitybuilders.org",
+        "DelegatedZoneNameServers": {
+          "Fn::GetAtt": [
+            "delegatedZone93B2A299",
+            "NameServers",
+          ],
+        },
+        "ParentZoneName": "awscommunitybuilders.org",
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "CustomCrossAccountZoneDelegationCustomResourceProviderHandler44A84265",
+            "Arn",
+          ],
+        },
+        "TTL": 172800,
+      },
+      "Type": "Custom::CrossAccountZoneDelegation",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "DelegationRecordcrossaccountzonedelegationhandlerrolePolicy7B31DBF8": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":iam::353228500194:role/HostedZoneDelegationRole",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "DelegationRecordcrossaccountzonedelegationhandlerrolePolicy7B31DBF8",
+        "Roles": [
+          {
+            "Fn::Select": [
+              1,
+              {
+                "Fn::Split": [
+                  "/",
+                  {
+                    "Fn::Select": [
+                      5,
+                      {
+                        "Fn::Split": [
+                          ":",
+                          {
+                            "Fn::GetAtt": [
+                              "CustomCrossAccountZoneDelegationCustomResourceProviderRoleED64687B",
+                              "Arn",
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "delegatedZone93B2A299": {
+      "Properties": {
+        "Name": "sandbox.awscommunitybuilders.org.",
+      },
+      "Type": "AWS::Route53::HostedZone",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
