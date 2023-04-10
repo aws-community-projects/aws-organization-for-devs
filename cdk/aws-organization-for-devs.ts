@@ -1,13 +1,29 @@
-import { App, Tags } from 'aws-cdk-lib';
+import { App } from 'aws-cdk-lib';
+
 import { DelegatedZoneStack } from './delegated-zone-stack';
 import { HostedZoneStack } from './hosted-zone-stack';
 
 const app = new App();
 
-new HostedZoneStack(app, 'hosted-zone-stack', {
-  env: { account: '353228500194', region: 'eu-west-1' },
+const rootAccountId = '353228500194';
+
+const accounts = [
+  { accountId: '799776970420', name: 'sandbox' },
+  { accountId: '012208286009', name: 'test' },
+  { accountId: '865725118528', name: 'prod' },
+];
+
+const rootStack = new HostedZoneStack(app, 'hosted-zone-stack', {
+  env: { account: rootAccountId, region: 'us-east-1' },
 });
 
-new DelegatedZoneStack(app, 'delegated-zone-stack', {
-  env: { account: '799776970420', region: 'us-east-1' },
-});
+const accountStacks = accounts.map(
+  (account) =>
+    new DelegatedZoneStack(app, `delegated-zone-stack-${account.name}`, {
+      env: { account: account.accountId, region: 'us-east-1' },
+      name: account.name,
+      rootAccountId,
+    }),
+);
+
+accountStacks.forEach((accountStack) => accountStack.addDependency(rootStack));

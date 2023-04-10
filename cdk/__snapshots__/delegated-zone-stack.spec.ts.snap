@@ -91,10 +91,10 @@ exports[`Entire Stack > match a snapshot 1`] = `
     },
     "DelegatedZoneCert71201BFD": {
       "Properties": {
-        "DomainName": "*.sandbox.awscommunitybuilders.org",
+        "DomainName": "*.test.awscommunitybuilders.org",
         "DomainValidationOptions": [
           {
-            "DomainName": "*.sandbox.awscommunitybuilders.org",
+            "DomainName": "*.test.awscommunitybuilders.org",
             "HostedZoneId": {
               "Ref": "delegatedZone93B2A299",
             },
@@ -124,11 +124,11 @@ exports[`Entire Stack > match a snapshot 1`] = `
               {
                 "Ref": "AWS::Partition",
               },
-              ":iam::353228500194:role/HostedZoneDelegationRole",
+              ":iam::9999:role/HostedZoneDelegationRole",
             ],
           ],
         },
-        "DelegatedZoneName": "sandbox.awscommunitybuilders.org",
+        "DelegatedZoneName": "test.awscommunitybuilders.org",
         "DelegatedZoneNameServers": {
           "Fn::GetAtt": [
             "delegatedZone93B2A299",
@@ -162,7 +162,7 @@ exports[`Entire Stack > match a snapshot 1`] = `
                     {
                       "Ref": "AWS::Partition",
                     },
-                    ":iam::353228500194:role/HostedZoneDelegationRole",
+                    ":iam::9999:role/HostedZoneDelegationRole",
                   ],
                 ],
               },
@@ -204,7 +204,7 @@ exports[`Entire Stack > match a snapshot 1`] = `
     },
     "delegatedZone93B2A299": {
       "Properties": {
-        "Name": "sandbox.awscommunitybuilders.org.",
+        "Name": "test.awscommunitybuilders.org.",
       },
       "Type": "AWS::Route53::HostedZone",
     },

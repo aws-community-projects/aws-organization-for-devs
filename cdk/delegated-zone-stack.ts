@@ -1,45 +1,35 @@
-import {
-  CfnOutput,
-  Fn,
-  RemovalPolicy,
-  SecretValue,
-  Stack,
-  StackProps,
-} from 'aws-cdk-lib';
-import {
-  Certificate,
-  CertificateValidation,
-} from 'aws-cdk-lib/aws-certificatemanager';
+import { CfnOutput, Fn, RemovalPolicy, SecretValue, Stack, StackProps } from 'aws-cdk-lib';
+import { Certificate, CertificateValidation } from 'aws-cdk-lib/aws-certificatemanager';
 import { Role } from 'aws-cdk-lib/aws-iam';
-import {
-  CrossAccountZoneDelegationRecord,
-  PublicHostedZone,
-} from 'aws-cdk-lib/aws-route53';
+import { CrossAccountZoneDelegationRecord, PublicHostedZone } from 'aws-cdk-lib/aws-route53';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 
+interface DelegatedZoneStackProps extends StackProps {
+  name: string;
+  rootAccountId: string;
+}
+
 export class DelegatedZoneStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props: DelegatedZoneStackProps) {
     super(scope, id, props);
 
-    const domainName = 'sandbox.awscommunitybuilders.org';
+    const { name, rootAccountId } = props;
+
+    const domainName = `${name}.awscommunitybuilders.org`;
 
     const delegatedZone = new PublicHostedZone(this, 'delegatedZone', {
       zoneName: domainName,
     });
 
     const delegationRoleArn = Stack.of(this).formatArn({
-      account: '353228500194',
+      account: rootAccountId,
       region: '',
       resource: 'role',
       resourceName: 'HostedZoneDelegationRole',
       service: 'iam',
     });
-    const delegationRole = Role.fromRoleArn(
-      this,
-      'DelegationRole',
-      delegationRoleArn
-    );
+    const delegationRole = Role.fromRoleArn(this, 'DelegationRole', delegationRoleArn);
 
     new CrossAccountZoneDelegationRecord(this, 'DelegationRecord', {
       delegationRole,
@@ -56,9 +46,7 @@ export class DelegatedZoneStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
       replicaRegions: [{ region: 'eu-west-1' }],
       secretName: '/account/certificateArn',
-      secretStringValue: SecretValue.unsafePlainText(
-        certificate.certificateArn
-      ),
+      secretStringValue: SecretValue.unsafePlainText(certificate.certificateArn),
     });
 
     new CfnOutput(this, 'nameservers', {

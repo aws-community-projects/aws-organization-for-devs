@@ -35,5 +35,9 @@ aws cloudformation create-stack --stack-name permissions-boundary --template-bod
 ```
 
 ```bash
-% aws cloudformation create-stack --stack-name cdk-bootstrap --template-body file://./StackSets/CdkBootstrap.yml --region eu-west-1 --tags Key=acb:cost-allocation:env,Value=org Key=acb:cost-allocation:owner,Value=elthrasher@gmail.com Key=acb:cost-allocation:provider,Value=CloudFormation Key=acb:cost-allocation:service,Value=organization --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=InputPermissionsBoundary,ParameterValue=developer-policy
+% aws cloudformation create-stack --stack-name cdk-bootstrap --template-body file://./StackSets/CdkBootstrap.yml --region eu-west-1 --tags Key=acb:cost-allocation:env,Value=org Key=acb:cost-allocation:owner,Value=elthrasher@gmail.com Key=acb:cost-allocation:provider,Value=CloudFormation Key=acb:cost-allocation:service,Value=organization --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=InputPermissionsBoundary,ParameterValue=developer-policy ParameterKey=TrustedAccounts,ParameterValue=447002520154 ParameterKey=CloudFormationExecutionPolicies,ParameterValue=arn:aws:iam::aws:policy/AdministratorAccess
+```
+
+```bash
+% aws cloudformation create-stack --stack-name cdk-bootstrap --template-body file://./StackSets/CdkBootstrap.yml --region us-east-1 --tags Key=acb:cost-allocation:env,Value=org Key=acb:cost-allocation:owner,Value=elthrasher@gmail.com Key=acb:cost-allocation:provider,Value=CloudFormation Key=acb:cost-allocation:service,Value=organization --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=InputPermissionsBoundary,ParameterValue=developer-policy ParameterKey=TrustedAccounts,ParameterValue=447002520154 ParameterKey=CloudFormationExecutionPolicies,ParameterValue=arn:aws:iam::aws:policy/AdministratorAccess
 ```

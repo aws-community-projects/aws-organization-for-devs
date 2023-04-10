@@ -7,7 +7,10 @@ import { DelegatedZoneStack } from './delegated-zone-stack';
 describe('Entire Stack', () => {
   test('match a snapshot', () => {
     const app = new App();
-    const stack = new DelegatedZoneStack(app, 'test-stack');
+    const stack = new DelegatedZoneStack(app, 'test-stack', {
+      name: 'test',
+      rootAccountId: '9999',
+    });
     const template = Template.fromStack(stack);
 
     expect(template).toMatchSnapshot();
