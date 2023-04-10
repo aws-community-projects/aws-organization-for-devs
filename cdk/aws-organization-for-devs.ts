@@ -2,6 +2,7 @@ import { App } from 'aws-cdk-lib';
 
 import { DelegatedZoneStack } from './delegated-zone-stack';
 import { HostedZoneStack } from './hosted-zone-stack';
+import { GithubOidcStack } from './github-oidc-stack';
 
 const app = new App();
 
@@ -25,5 +26,10 @@ const accountStacks = accounts.map(
       rootAccountId,
     }),
 );
+
+new GithubOidcStack(app, 'github-oidc-stack', {
+  env: { account: '447002520154', region: 'eu-west-1' },
+  repos: ['cicd'],
+});
 
 accountStacks.forEach((accountStack) => accountStack.addDependency(rootStack));

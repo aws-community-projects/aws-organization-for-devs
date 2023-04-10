@@ -1,4 +1,4 @@
-import { expect, vi } from 'vitest';
+import { expect } from 'vitest';
 
 expect.addSnapshotSerializer({
   serialize: (val) => JSON.stringify({ ...val, S3Key: '[HASH REMOVED].zip' }),

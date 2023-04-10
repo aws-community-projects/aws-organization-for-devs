@@ -11,6 +11,7 @@
         "test": "vitest run --coverage --silent"
     },
     "dependencies": {
+        "aws-cdk-github-oidc": "^2.3.2",
         "aws-cdk-lib": "^2.14.0",
         "constructs": "^10.0.73"
     },
@@ -18,7 +19,7 @@
         "@types/node": "^18.11.9",
         "@vitest/coverage-c8": "^0.30.0",
         "aws-cdk": "^2.14.0",
-        "rimraf": "^4.1.1",
+        "rimraf": "^5.0.0",
         "ts-node": "^10.5.0",
         "typescript": "^5.0.2",
         "vitest": "^0.30.0"
