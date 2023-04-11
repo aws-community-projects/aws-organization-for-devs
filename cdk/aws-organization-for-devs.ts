@@ -11,7 +11,7 @@ const rootAccountId = '353228500194';
 const accounts = [
   { accountId: '799776970420', name: 'sandbox' },
   { accountId: '012208286009', name: 'test' },
-  { accountId: '865725118528', name: 'prod' },
+  { accountId: '865725118528', name: 'production' },
 ];
 
 const rootStack = new HostedZoneStack(app, 'hosted-zone-stack', {
