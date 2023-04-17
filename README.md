@@ -13,6 +13,15 @@ All human access is managed using [AWS IAM Identity Center](https://aws.amazon.c
 
 Developers have broad access in the **Sandbox OU**. Although use of IaC is preferred, developers will have write access to most resources, enabling them to make rapid changes, force events, and debug integrations. Once a stack is stable, it should be connected to a CI/CD pipeline to deploy to the **Test** and **Production** OUs. Example follows.
 
+## Hosted Zones
+
+There are environment-specific Hosted Zones available with wildcard certificates following the pattern of 
+- *.sandbox.awscommunitybuilders.org
+- *.test.awscommunitybuilders.org
+- *.production.awscommunitybuilders.org
+
+This makes it easy to delegate DNS to `myapp.<env>.awscommunitybuilders.org`. See the [example](https://github.com/aws-community-projects/cicd/blob/main/cdk/cicd.awscommunitybuilders.org-stack.ts#L82) for more information.
+
 ## Permissions Boundary
 
 Use of the `developer-policy` [Permissions Boundary](https://aws.amazon.com/blogs/devops/secure-cdk-deployments-with-iam-permission-boundaries/) is required. It can be added to your [cdk.json](cdk.json#L50) file.
