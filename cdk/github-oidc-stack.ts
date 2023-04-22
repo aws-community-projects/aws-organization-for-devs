@@ -1,6 +1,6 @@
 import { GithubActionsIdentityProvider, GithubActionsRole } from 'aws-cdk-github-oidc';
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { ManagedPolicy } from 'aws-cdk-lib/aws-iam';
+import { ManagedPolicy, PolicyDocument, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 
 interface GithubOidcStackProps extends StackProps {
@@ -20,7 +20,13 @@ export class GithubOidcStack extends Stack {
     repos.forEach(
       (repo) =>
         new GithubActionsRole(this, `DeployRole-${repo}`, {
-          managedPolicies: [ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess')],
+          inlinePolicies: {
+            'assume-cdk': new PolicyDocument({
+              statements: [
+                new PolicyStatement({ actions: ['sts:AssumeRole'], resources: ['arn:aws:iam::*:role/cdk-*'] }),
+              ],
+            }),
+          },
           owner: 'aws-community-projects',
           permissionsBoundary,
           provider,

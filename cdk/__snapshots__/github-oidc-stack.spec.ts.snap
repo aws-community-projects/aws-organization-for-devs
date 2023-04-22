@@ -96,20 +96,6 @@ exports[`Entire Stack > match a snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": [
-          {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/AdministratorAccess",
-              ],
-            ],
-          },
-        ],
         "PermissionsBoundary": {
           "Fn::Join": [
             "",
@@ -126,6 +112,21 @@ exports[`Entire Stack > match a snapshot 1`] = `
             ],
           ],
         },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "sts:AssumeRole",
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:iam::*:role/cdk-*",
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "assume-cdk",
+          },
+        ],
         "RoleName": "github-deploy-role-repoone",
       },
       "Type": "AWS::IAM::Role",
@@ -154,20 +155,6 @@ exports[`Entire Stack > match a snapshot 1`] = `
           ],
           "Version": "2012-10-17",
         },
-        "ManagedPolicyArns": [
-          {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/AdministratorAccess",
-              ],
-            ],
-          },
-        ],
         "PermissionsBoundary": {
           "Fn::Join": [
             "",
@@ -184,6 +171,21 @@ exports[`Entire Stack > match a snapshot 1`] = `
             ],
           ],
         },
+        "Policies": [
+          {
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": "sts:AssumeRole",
+                  "Effect": "Allow",
+                  "Resource": "arn:aws:iam::*:role/cdk-*",
+                },
+              ],
+              "Version": "2012-10-17",
+            },
+            "PolicyName": "assume-cdk",
+          },
+        ],
         "RoleName": "github-deploy-role-repotwo",
       },
       "Type": "AWS::IAM::Role",
