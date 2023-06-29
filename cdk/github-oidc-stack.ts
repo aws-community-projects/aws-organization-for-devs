@@ -13,6 +13,11 @@ export class GithubOidcStack extends Stack {
 
     const { repos } = props;
 
+    // see https://github.com/aripalo/aws-cdk-github-oidc/issues/24
+    (
+      GithubActionsIdentityProvider as unknown as GithubActionsIdentityProvider & { thumbprints: undefined }
+    ).thumbprints = undefined;
+
     const provider = new GithubActionsIdentityProvider(this, 'GithubProvider');
 
     const permissionsBoundary = ManagedPolicy.fromManagedPolicyName(this, 'PermissionsBoundary', 'developer-policy');

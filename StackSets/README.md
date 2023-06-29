@@ -7,7 +7,7 @@
 ```
 
 ```bash
-% aws cloudformation create-stack-instances --stack-set-name required-tags --deployment-targets OrganizationalUnitIds=ou-o1po-8t2jlg7y,ou-o1po-nc0nerid,ou-o1po-ei9sq3nv,ou-o1po-gc7tz6ee --regions eu-west-1 us-east-1
+% aws cloudformation create-stack-instances --stack-set-name required-tags --deployment-targets OrganizationalUnitIds=ou-o1po-8t2jlg7y,ou-o1po-nc0nerid,ou-o1po-ei9sq3nv,ou-o1po-gc7tz6ee --regions eu-west-1 us-east-1 us-west-2
 ```
 
 ## PermissionsBoundary StackSet
@@ -31,7 +31,7 @@ aws cloudformation create-stack --stack-name permissions-boundary --template-bod
 ```
 
 ```bash
-% aws cloudformation create-stack-instances --stack-set-name cdk-bootstrap --deployment-targets OrganizationalUnitIds=ou-o1po-8t2jlg7y,ou-o1po-nc0nerid,ou-o1po-ei9sq3nv,ou-o1po-gc7tz6ee --regions eu-west-1 us-east-1
+% aws cloudformation create-stack-instances --stack-set-name cdk-bootstrap --deployment-targets OrganizationalUnitIds=ou-o1po-8t2jlg7y,ou-o1po-nc0nerid,ou-o1po-ei9sq3nv,ou-o1po-gc7tz6ee --regions eu-west-1 us-east-1 us-west-2
 ```
 
 ```bash
